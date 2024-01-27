@@ -5,38 +5,6 @@ S = None
 L = None
 P = None
 Q = None
-'''
-Quiz Sections:
-    Lecture 1 (Intro to mechanisms and machines), 
-    Lecture 2 (Mechanism Mobility (Degree-of-Freedom)), 
-    Lecture 3 (Inversion Types of Four-bar and Slider Crank Mechanisms)
-'''
-
-'''
-Joint Classification:
-Type of contact between elements: line, point, surface
-• Lower pair - surface contact
-• Higher pair - point or line contact
-Number of degrees of freedom allowed
-• Consider translation and rotation
-• 1 DoF - full joint (Rotating full pin joint, translating full slider)
-• 2 DoF - half joint (Link against plane, Pin in slot)
-• 3+ DoF
-Type of physical closure
-• Form closed - closed by its geometry
-• Force-closed - external force keeps the joint together/closed
-Crank
-• A link that makes a complete revolution and is pivoted to the ground.
-Rocker
-• a link that has oscillatory (back and forth) rotation and is
-    pivoted to the ground
-Coupler
-• a connecting rod, a link that has a complex motion and
-    is not pivoted to the ground
-Ground
-• a link or links that are fixed (non-moving) with respect
-    to the reference frame
-'''
 
 # arrange link as R1, R2, R3, R4 ... as a loop, where R1 is the base, R2 is driving, and R'last' is following
 temporary_link_array = np.array([1.2, 3.4, 5.6, 7.8])
@@ -113,7 +81,9 @@ class Mechanism_with_unknown:
     
     def centre_links(self):
         return self.arrange_cronologically()[1:-1]
-        
+
+
+'''    
     def solve(self, category: str):
         symbol_number = 0
         for item in self.link_array[item]:
@@ -130,7 +100,7 @@ class Mechanism_with_unknown:
         if category == "crank-rocker":
             # Condition S + L < P + Q and S is adjacent to base
 
-        ''' Start here '''
+        Start here
 
         S = self.shortest_link()
         L = self.longuest_link()
@@ -143,7 +113,7 @@ class Mechanism_with_unknown:
                 if category == "double-crank":
                     return sp.solve_rational_inequalities(S + P, Q + P, '<')
                 
-
+'''
 
 answer = Mechanism_link_lengths(temporary_link_array).moving_links()
 print(answer)
@@ -267,18 +237,7 @@ def permissible_base_length(link_array, desired_mechanism):
             solution_Q = sp.solve_univariate_inequality(S + L <= P + Q, Q)
             print(f"If S were to be the base: {solution_Q}.")
             
-"""
-Example of types of four-bar mechanisms
-if r_2 (driver) = 2, r_3 (coupler) = 4, r_4 (follower) = 5
 
-r_1 (base) (cm)
-
-0 < 1 = Drag Link, 1 = Change Point
-1 < 3 = Rocker-rocker, 3 = Change Point
-3 < 7 = Crank rocker, 7 = Change Point
-7 < 11 = Rocker rocker, 11 = All links collinear (no motion)
-r_1 > 11 = r_2 + r_3 + r_4 = Impossible to assemble mechanism
-"""
    
 #links = np.array([30,80,60,70])
 #answer = Grashof_condition(links)
